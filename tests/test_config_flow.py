@@ -114,6 +114,10 @@ async def test_bluetooth_form(
             "SolixBLE.SolixBLEDevice.negotiated",
             side_effect=[True],
         ),
+        patch(
+            "SolixBLE.PrimeDevice.negotiated",
+            side_effect=[True],
+        ),
     ):
         result = await hass.config_entries.flow.async_configure(
             flow_id=result["flow_id"],
@@ -227,6 +231,11 @@ async def test_bluetooth_form_error(
             new_callable=PropertyMock,
             return_value=negotiated,
         ),
+        patch(
+            "SolixBLE.PrimeDevice.negotiated",
+            new_callable=PropertyMock,
+            return_value=negotiated,
+        ),
     ):
         result = await hass.config_entries.flow.async_configure(
             flow_id=result["flow_id"],
@@ -257,6 +266,10 @@ async def test_bluetooth_form_error(
         ),
         patch(
             "SolixBLE.SolixBLEDevice.negotiated",
+            side_effect=[True],
+        ),
+        patch(
+            "SolixBLE.PrimeDevice.negotiated",
             side_effect=[True],
         ),
     ):

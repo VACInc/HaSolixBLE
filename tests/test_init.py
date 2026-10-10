@@ -91,6 +91,10 @@ async def test_setup(
             "SolixBLE.SolixBLEDevice.negotiated",
             side_effect=[True],
         ),
+        patch(
+            "SolixBLE.PrimeDevice.negotiated",
+            side_effect=[True],
+        ),
     ):
         assert await async_setup_component(hass, DOMAIN, {}) is True
         await hass.async_block_till_done()
@@ -208,6 +212,11 @@ async def test_setup_error(
             new_callable=PropertyMock,
             return_value=negotiated,
         ),
+        patch(
+            "SolixBLE.PrimeDevice.negotiated",
+            new_callable=PropertyMock,
+            return_value=negotiated,
+        ),
     ):
         assert await async_setup_component(hass, DOMAIN, {}) is True
         await hass.async_block_till_done()
@@ -235,6 +244,10 @@ async def test_setup_error(
         ),
         patch(
             "SolixBLE.SolixBLEDevice.negotiated",
+            side_effect=[True],
+        ),
+        patch(
+            "SolixBLE.PrimeDevice.negotiated",
             side_effect=[True],
         ),
     ):
